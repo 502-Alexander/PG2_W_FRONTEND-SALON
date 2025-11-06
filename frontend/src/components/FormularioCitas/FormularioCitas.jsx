@@ -92,8 +92,10 @@ function FormularioCitas({ onCitaCreada, onClose }) {
         { id: 4, nombre: 'Diseño de color (mechas y balayage)', precio: 800.00, descripcion: 'Técnicas avanzadas de coloración - Duración: 5 a 7 horas' },
         { id: 5, nombre: 'Pedicure', precio: 150.00, descripcion: 'Pedicure completo con esmaltado - Duración: 1 hora' },
         { id: 6, nombre: 'Tratamientos capilares', precio: 350.00, descripcion: 'Tratamiento reparador para cabello dañado - Duración: 2 horas' }
-      ])
-      console.warn('⚠️ Usando datos de prueba para servicios debido a un error')
+      ];
+      
+      console.warn('⚠️ Usando datos de ejemplo para servicios');
+      setServicios(serviciosEjemplo);
     }
   }
 
