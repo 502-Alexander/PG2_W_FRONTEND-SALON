@@ -16,10 +16,29 @@ export const servicioService = {
   // Obtener todos los servicios
   async obtenerServicios() {
     try {
+      console.log('🔍 Solicitando servicios a la API...')
       const response = await api.get('/servicios')
-      return response.data.data || []
+      console.log('📡 Respuesta de la API (raw):', response.data)
+      
+      // Manejar diferentes formatos de respuesta
+      let servicios = [];
+      
+      if (Array.isArray(response.data)) {
+        // Si la respuesta es un array directo
+        servicios = response.data;
+      } else if (response.data && Array.isArray(response.data.data)) {
+        // Si la respuesta es { data: [...] }
+        servicios = response.data.data;
+      } else if (response.data && response.data.servicios) {
+        // Si la respuesta es { servicios: [...] }
+        servicios = response.data.servicios;
+      }
+      
+      console.log('✅ Servicios obtenidos:', servicios.length)
+      return servicios;
     } catch (error) {
-      console.error('Error obteniendo servicios:', error.message)
+      console.error('❌ Error obteniendo servicios:', error.message)
+      console.error('Detalles del error:', error.response?.data || error.message)
       return []
     }
   },
@@ -125,6 +144,3 @@ export const servicioService = {
 }
 
 export default servicioService
-
-
-
