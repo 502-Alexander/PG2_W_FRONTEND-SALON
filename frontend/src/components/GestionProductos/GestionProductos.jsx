@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './GestionProductos.css';
 
-const API = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
-const IMAGES = import.meta.env.VITE_IMAGES_URL || 'https://backend-pw-wh30.onrender.com';
-
 const GestionProductos = () => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
@@ -35,8 +32,8 @@ const GestionProductos = () => {
       console.log('🔄 Recargando datos de productos...');
 
       const [productosResponse, categoriasResponse] = await Promise.all([
-        axios.get(`${API}/productos`),
-        axios.get(`${API}/categorias`)
+        axios.get('https://backend-14-zmcj.onrender.com/api/productos'),
+        axios.get('https://backend-14-zmcj.onrender.com/api/categorias')
       ]);
 
       console.log('📦 Productos cargados:', productosResponse.data.data);
@@ -96,7 +93,7 @@ const GestionProductos = () => {
   const handleEliminarProducto = async (producto) => {
     if (window.confirm(`¿Estás seguro de eliminar "${producto.nombre}"?`)) {
       try {
-  await axios.delete(`${API}/productos/${producto.producto_id}`);
+        await axios.delete(`https://backend-14-zmcj.onrender.com/api/productos/${producto.producto_id}`);
         await cargarDatos();
         alert('Producto eliminado exitosamente');
       } catch (error) {
@@ -109,7 +106,7 @@ const GestionProductos = () => {
   const handleSubmitNuevo = async (e) => {
     e.preventDefault();
     try {
-  await axios.post(`${API}/productos`, formulario);
+      await axios.post('https://backend-14-zmcj.onrender.com/api/productos', formulario);
       setMostrarModalNuevo(false);
       await cargarDatos();
       alert('Producto creado exitosamente');
@@ -122,7 +119,7 @@ const GestionProductos = () => {
   const handleSubmitEditar = async (e) => {
     e.preventDefault();
     try {
-  await axios.put(`${API}/productos/${productoSeleccionado.producto_id}`, formulario);
+      await axios.put(`https://backend-14-zmcj.onrender.com/api/productos/${productoSeleccionado.producto_id}`, formulario);
       setMostrarModalEditar(false);
       await cargarDatos();
       alert('Producto actualizado exitosamente');
@@ -156,9 +153,9 @@ const GestionProductos = () => {
       }
 
       console.log('📤 Enviando datos:', datosActualizacion);
-  console.log('🔗 URL:', `${API}/productos/${producto.producto_id}`);
+      console.log('🔗 URL:', `https://backend-14-zmcj.onrender.com/api/productos/${producto.producto_id}`);
 
-  const response = await axios.put(`${API}/productos/${producto.producto_id}`, datosActualizacion);
+      const response = await axios.put(`https://backend-14-zmcj.onrender.com/api/productos/${producto.producto_id}`, datosActualizacion);
       
       console.log('✅ Respuesta del servidor:', response.data);
       
@@ -201,7 +198,7 @@ const GestionProductos = () => {
     try {
       console.log('🔄 Enviando imagen al servidor...');
       const response = await axios.post(
-        `${API}/productos/${productoSeleccionado.producto_id}/imagen`,
+        `https://backend-14-zmcj.onrender.com/api/productos/${productoSeleccionado.producto_id}/imagen`,
         formData,
         {
           headers: {
@@ -277,7 +274,7 @@ const GestionProductos = () => {
                 <td>
                   <div className="imagen-container">
                     <img 
-                      src={producto.imagen ? `${IMAGES}${producto.imagen}` : '/images/producto-default.svg'} 
+                      src={producto.imagen ? `http://localhost:4001${producto.imagen}` : '/images/producto-default.svg'} 
                       alt={producto.nombre}
                       className="imagen-producto"
                       onError={(e) => {
@@ -532,7 +529,7 @@ const GestionProductos = () => {
                     {productoSeleccionado?.imagen ? (
                       <div>
                         <img 
-                            src={`${IMAGES}${productoSeleccionado.imagen}`} 
+                          src={`http://localhost:4001${productoSeleccionado.imagen}`} 
                           alt="Producto" 
                           onError={(e) => {
                             console.log('❌ Error cargando imagen en modal:', productoSeleccionado.imagen);

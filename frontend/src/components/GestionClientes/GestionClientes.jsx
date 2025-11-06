@@ -4,8 +4,6 @@ import clienteService from '../../services/clienteService';
 import GraficasClientes from './GraficasClientes';
 import './GestionClientes.css';
 
-const IMAGES = import.meta.env.VITE_IMAGES_URL || 'https://backend-pw-wh30.onrender.com';
-
 const GestionClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
@@ -229,7 +227,7 @@ const GestionClientes = () => {
                     <div className="cliente-foto">
                       {cliente.foto_cliente ? (
                         <img 
-                          src={`${IMAGES}${cliente.foto_cliente}`} 
+                          src={`http://localhost:4001${cliente.foto_cliente}`} 
                           alt={cliente.nombre_completo}
                           className="foto-cliente"
                         />
@@ -296,7 +294,7 @@ const GestionClientes = () => {
                     <div className="cliente-detalle-foto">
                       {clienteSeleccionado.foto_cliente ? (
                         <img 
-                          src={`${IMAGES}${clienteSeleccionado.foto_cliente}`} 
+                          src={`http://localhost:4001${clienteSeleccionado.foto_cliente}`} 
                           alt={clienteSeleccionado.nombre_completo}
                           className="foto-cliente-detalle"
                         />

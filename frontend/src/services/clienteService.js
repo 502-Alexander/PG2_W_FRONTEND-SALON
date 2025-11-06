@@ -1,7 +1,7 @@
 // Servicio para gestión de clientes unificados
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
+const API_BASE_URL = 'https://backend-14-zmcj.onrender.com/api';
 
 class ClienteService {
   // Obtener todos los clientes unificados

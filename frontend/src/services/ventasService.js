@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
+const API_URL = 'https://backend-14-zmcj.onrender.com/api';
 
 // Configurar axios con headers por defecto
 const api = axios.create({

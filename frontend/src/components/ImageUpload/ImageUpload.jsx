@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './ImageUpload.css';
 
-const API = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
-
 const ImageUpload = ({ productId, onImagesUploaded }) => {
   const [images, setImages] = useState({
     foto1: null,
@@ -66,7 +64,7 @@ const ImageUpload = ({ productId, onImagesUploaded }) => {
         formData.append('foto2', images.foto2);
       }
 
-      const response = await fetch(`${API}/upload/producto/${productId}`, {
+      const response = await fetch(`https://backend-14-zmcj.onrender.com/api/upload/producto/${productId}`, {
         method: 'POST',
         body: formData
       });

@@ -1,7 +1,8 @@
 // Servicio para manejar las operaciones de servicios con el backend
-import axios from 'axios';
+import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api'
+// Configuración base de axios
+const API_BASE_URL = 'https://backend-14-zmcj.onrender.com/api'
 
 const api = axios.create({
   baseURL: API_BASE_URL,

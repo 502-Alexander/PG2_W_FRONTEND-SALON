@@ -5,8 +5,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import '../styles/VerificarEmail.css';
 
-const API = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
-
 function VerificarEmail() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ function VerificarEmail() {
     try {
       setEstado('verificando');
       
-      const response = await fetch(`${API}/verificacion/verificar-email?token=${token}`, {
+      const response = await fetch(`https://backend-14-zmcj.onrender.com/api/verificacion/verificar-email?token=${token}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -63,7 +61,7 @@ function VerificarEmail() {
       const email = prompt('Ingresa tu email para reenviar la verificación:');
       if (!email) return;
 
-      const response = await fetch(`${API}/verificacion/reenviar`, {
+      const response = await fetch('https://backend-14-zmcj.onrender.com/api/verificacion/reenviar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

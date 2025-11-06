@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
-const API = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
-
 export default function DashboardLogs() {
   const [usuarios, setUsuarios] = useState([]);
   const [errores, setErrores] = useState([]);
@@ -11,17 +9,17 @@ export default function DashboardLogs() {
 
   useEffect(() => {
     // Usuarios más activos
-    axios.get(`${API}/logs/usuarios`)
+    axios.get('https://backend-14-zmcj.onrender.com/api/logs/usuarios')
       .then(res => setUsuarios(res.data))
       .catch(err => console.error(err));
 
     // Errores frecuentes
-    axios.get(`${API}/logs/errores`)
+    axios.get('https://backend-14-zmcj.onrender.com/api/logs/errores')
       .then(res => setErrores(res.data))
       .catch(err => console.error(err));
 
     // Actividad diaria
-    axios.get(`${API}/logs/actividad`)
+    axios.get('https://backend-14-zmcj.onrender.com/api/logs/actividad')
       .then(res => setActividad(res.data))
       .catch(err => console.error(err));
   }, []);

@@ -3,8 +3,6 @@ import ImageUpload from '../components/ImageUpload/ImageUpload';
 //import "../styles/AdminProductos.css";
 import "../styles/AdminProductos.css";
 
-const API = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
-const IMAGES = import.meta.env.VITE_IMAGES_URL || 'https://backend-pw-wh30.onrender.com';
 const AdminProductos = () => {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -18,7 +16,7 @@ const AdminProductos = () => {
   const cargarProductos = async () => {
     try {
       setCargando(true);
-  const response = await fetch(`${API}/productos`);
+      const response = await fetch('https://backend-14-zmcj.onrender.com/api/productos');
       const result = await response.json();
       
       if (result.success) {
@@ -69,7 +67,7 @@ const AdminProductos = () => {
                 <div className="imagen-item">
                   <label>Imagen Principal:</label>
                   {producto.foto1 ? (
-                    <img src={`${IMAGES}${producto.foto1}`} alt="Principal" />
+                    <img src={`http://localhost:4001${producto.foto1}`} alt="Principal" />
                   ) : (
                     <div className="sin-imagen">Sin imagen</div>
                   )}
@@ -78,7 +76,7 @@ const AdminProductos = () => {
                 <div className="imagen-item">
                   <label>Imagen Secundaria:</label>
                   {producto.foto2 ? (
-                    <img src={`${IMAGES}${producto.foto2}`} alt="Secundaria" />
+                    <img src={`http://localhost:4001${producto.foto2}`} alt="Secundaria" />
                   ) : (
                     <div className="sin-imagen">Sin imagen</div>
                   )}

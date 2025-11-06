@@ -4,8 +4,6 @@ import { useResponsive } from '../../hooks/useResponsive'
 import citasService from '../../services/citasService'
 import './FormularioCitas.css'
 
-const API = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api'
-
 function FormularioCitas({ onCitaCreada, onClose }) {
   const [formData, setFormData] = useState({
     nombre: '',
@@ -54,7 +52,7 @@ function FormularioCitas({ onCitaCreada, onClose }) {
   const cargarServicios = async () => {
     try {
       console.log('🔄 Cargando servicios desde API...')
-  const response = await fetch(`${API}/servicios`)
+      const response = await fetch('https://backend-14-zmcj.onrender.com/api/servicios')
       console.log('📡 Respuesta de servicios:', response.status)
       const data = await response.json()
       console.log('📦 Datos de servicios:', data)
@@ -72,7 +70,7 @@ function FormularioCitas({ onCitaCreada, onClose }) {
   const cargarCombos = async () => {
     try {
       console.log('🔄 Cargando combos desde API...')
-  const response = await fetch(`${API}/servicios/combos`)
+      const response = await fetch('https://backend-14-zmcj.onrender.com/api/servicios/combos')
       console.log('📡 Respuesta de combos:', response.status)
       const data = await response.json()
       console.log('📦 Datos de combos:', data)

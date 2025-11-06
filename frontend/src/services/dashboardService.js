@@ -1,7 +1,7 @@
 // Servicio para el Dashboard - Estadísticas generales
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api';
+const API_URL = 'https://backend-14-zmcj.onrender.com/api';
 
 const dashboardService = {
   // Obtener estadísticas generales del dashboard

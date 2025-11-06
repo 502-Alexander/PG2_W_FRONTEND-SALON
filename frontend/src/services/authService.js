@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 // Configuración base de axios
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://backend-pw-wh30.onrender.com/api'
+const API_BASE_URL = 'https://backend-14-zmcj.onrender.com/api'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
