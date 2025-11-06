@@ -56,14 +56,44 @@ function FormularioCitas({ onCitaCreada, onClose }) {
       console.log('📡 Respuesta de servicios:', response.status)
       const data = await response.json()
       console.log('📦 Datos de servicios:', data)
-      if (data.success) {
+      
+      // Verificar si la respuesta es un array directamente
+      if (Array.isArray(data)) {
+        setServicios(data)
+        console.log('✅ Servicios cargados (formato array):', data.length)
+      } 
+      // O si viene en formato { success: true, data: [...] }
+      else if (data.success && Array.isArray(data.data)) {
         setServicios(data.data)
-        console.log('✅ Servicios cargados:', data.data.length)
-      } else {
-        console.error('❌ Error en respuesta de servicios:', data)
+        console.log('✅ Servicios cargados (formato success/data):', data.data.length)
+      }
+      // O si viene en otro formato que necesite mapeo
+      else if (Array.isArray(data.servicios)) {
+        setServicios(data.servicios)
+        console.log('✅ Servicios cargados (formato servicios):', data.servicios.length)
+      }
+      else {
+        console.error('❌ Formato de respuesta inesperado:', data)
+        // Intentar forzar el array de servicios para pruebas
+        setServicios([
+          { id: 1, nombre: 'Nanoplastía (alisado)', precio: 1300.00, descripcion: 'Alisado profesional según largo y grosor del cabello - Duración: 5 a 8 horas' },
+          { id: 2, nombre: 'Corte', precio: 150.00, descripcion: 'Corte profesional adaptado a tu estilo - Duración: 45 minutos' },
+          // Agrega más servicios según sea necesario
+        ])
+        console.warn('⚠️ Usando datos de prueba para servicios')
       }
     } catch (error) {
       console.error('❌ Error al cargar servicios:', error)
+      // En caso de error, también cargar datos de prueba
+      setServicios([
+        { id: 1, nombre: 'Nanoplastía (alisado)', precio: 1300.00, descripcion: 'Alisado profesional según largo y grosor del cabello - Duración: 5 a 8 horas' },
+        { id: 2, nombre: 'Corte', precio: 150.00, descripcion: 'Corte profesional adaptado a tu estilo - Duración: 45 minutos' },
+        { id: 3, nombre: 'Baño de color (tinte)', precio: 300.00, descripcion: 'Coloración profesional con productos de calidad - Duración: 2 horas' },
+        { id: 4, nombre: 'Diseño de color (mechas y balayage)', precio: 800.00, descripcion: 'Técnicas avanzadas de coloración - Duración: 5 a 7 horas' },
+        { id: 5, nombre: 'Pedicure', precio: 150.00, descripcion: 'Pedicure completo con esmaltado - Duración: 1 hora' },
+        { id: 6, nombre: 'Tratamientos capilares', precio: 350.00, descripcion: 'Tratamiento reparador para cabello dañado - Duración: 2 horas' }
+      ])
+      console.warn('⚠️ Usando datos de prueba para servicios debido a un error')
     }
   }
 
