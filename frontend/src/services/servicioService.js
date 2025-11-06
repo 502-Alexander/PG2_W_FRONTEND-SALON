@@ -1,15 +1,40 @@
 // Servicio para manejar las operaciones de servicios con el backend
-import axios from 'axios'
+import axios from 'axios';
 
 // Configuración base de axios
-const API_BASE_URL = 'https://backend-14-zmcj.onrender.com/api'
+const API_BASE_URL = 'https://backend-14-zmcj.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  withCredentials: false, // Importante para CORS
+  timeout: 10000 // Tiempo de espera de 10 segundos
+});
+
+// Interceptor para manejar errores globalmente
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response) {
+      // El servidor respondió con un estado de error
+      console.error('Error de respuesta del servidor:', {
+        status: error.response.status,
+        data: error.response.data,
+        headers: error.response.headers
+      });
+    } else if (error.request) {
+      // La solicitud fue hecha pero no se recibió respuesta
+      console.error('No se recibió respuesta del servidor:', error.request);
+    } else {
+      // Algo sucedió en la configuración de la solicitud
+      console.error('Error al configurar la solicitud:', error.message);
+    }
+    return Promise.reject(error);
   }
-})
+);
 
 // Servicio de servicios
 export const servicioService = {
@@ -37,9 +62,9 @@ export const servicioService = {
       console.log('✅ Servicios obtenidos:', servicios.length)
       return servicios;
     } catch (error) {
-      console.error('❌ Error obteniendo servicios:', error.message)
-      console.error('Detalles del error:', error.response?.data || error.message)
-      return []
+      console.error('❌ Error obteniendo servicios:', error);
+      console.error('Detalles del error:', error.response?.data || error.message);
+      return [];
     }
   },
 
@@ -57,11 +82,32 @@ export const servicioService = {
   // Obtener todos los combos
   async obtenerCombos() {
     try {
-      const response = await api.get('/servicios/combos')
-      return response.data.data || []
+      console.log('🔄 Solicitando combos a la API...');
+      const response = await api.get('/servicios/combos', {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      });
+      
+      console.log('📡 Respuesta de combos:', response);
+      
+      // Manejar diferentes formatos de respuesta
+      if (Array.isArray(response.data)) {
+        return response.data;
+      } else if (response.data && Array.isArray(response.data.data)) {
+        return response.data.data;
+      } else if (response.data && response.data.combos) {
+        return response.data.combos;
+      }
+      
+      console.warn('⚠️ Formato de respuesta inesperado para combos:', response.data);
+      return [];
     } catch (error) {
-      console.error('Error obteniendo combos:', error.message)
-      return []
+      console.error('❌ Error obteniendo combos:', error);
+      console.error('Detalles del error:', error.response?.data || error.message);
+      return [];
     }
   },
 
