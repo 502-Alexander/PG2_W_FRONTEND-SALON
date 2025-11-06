@@ -40,64 +40,30 @@ function Servicios() {
         servicios_incluidos: servicio.servicios_incluidos || []
       }))
       
-      const combosConTipo = combosData.map(combo => ({
-        ...combo,
-        tipo: 'combo',
-        duracion: combo.duracion || '120 min', // Duración por defecto
-        precio_base: combo.precio || combo.precio_base, // Normalizar precio
-        servicios_incluidos: combo.servicios_incluidos || []
-      }))
+      const combosConTipo = combosData.map(combo => {
+        // Mapear los campos según la estructura de la base de datos
+        const comboNormalizado = {
+          id: combo.combo_id || combo.id,
+          nombre: combo.nombre,
+          descripcion: combo.descripcion || 'Combo de servicios',
+          precio_base: combo.precio_combo || combo.precio || 0,
+          precio_original: combo.precio_original || 0,
+          duracion: combo.duracion || '120 min',
+          tipo: 'combo',
+          servicios_incluidos: combo.servicios_incluidos || []
+        }
+        
+        console.log('🔧 Combo normalizado:', comboNormalizado)
+        return comboNormalizado
+      })
       
-      // Si no hay datos del backend, usar datos de ejemplo
-      if (serviciosConTipo.length === 0 && combosConTipo.length === 0) {
-        console.log('⚠️ No hay datos en el backend, usando datos de ejemplo')
-        
-        const serviciosEjemplo = [
-          {
-            id: 1,
-            nombre: "Corte y Peinado",
-            descripcion: "Corte profesional con lavado y peinado incluido",
-            precio_base: 25000,
-            duracion: "60 min",
-            tipo: "servicio"
-          },
-          {
-            id: 2,
-            nombre: "Tintura Completa",
-            descripcion: "Tintura profesional con productos de alta calidad",
-            precio_base: 45000,
-            duracion: "120 min",
-            tipo: "servicio"
-          },
-          {
-            id: 3,
-            nombre: "Tratamiento Capilar",
-            descripcion: "Tratamiento hidratante para cabello dañado",
-            precio_base: 35000,
-            duracion: "90 min",
-            tipo: "servicio"
-          }
-        ]
-
-        const combosEjemplo = [
-          {
-            id: 1,
-            nombre: "Combo Belleza Completa",
-            descripcion: "Corte + Tintura + Tratamiento",
-            precio_base: 95000,
-            precio_original: 105000,
-            duracion: "240 min",
-            tipo: "combo",
-            servicios_incluidos: ["Corte y Peinado", "Tintura Completa", "Tratamiento Capilar"]
-          }
-        ]
-        
-        setServicios(serviciosEjemplo)
-        setCombos(combosEjemplo)
-      } else {
-        setServicios(serviciosConTipo)
-        setCombos(combosConTipo)
-      }
+      // Siempre usar los datos de la API, incluso si están vacíos
+      console.log('✅ Datos cargados correctamente')
+      console.log('📊 Servicios:', serviciosConTipo)
+      console.log('🎁 Combos:', combosConTipo)
+      
+      setServicios(serviciosConTipo)
+      setCombos(combosConTipo)
     } catch (err) {
       console.error('Error cargando servicios:', err)
       setError('Error al cargar los servicios. Por favor, intenta nuevamente.')
